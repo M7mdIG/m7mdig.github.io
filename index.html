@@ -3,122 +3,584 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic Tac Toe</title>
+  <title>Mohamed Gaaboub | Portfolio</title>
   <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111827;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --accent: #7c3aed;
+      --accent-2: #38bdf8;
+      --shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: sans-serif;
-      text-align: center;
-      background: #f4f4f4;
-      margin-top: 50px;
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.18), transparent 30%),
+                  radial-gradient(circle at 80% 0%, rgba(56, 189, 248, 0.18), transparent 30%),
+                  radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.16), transparent 25%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
     }
 
-    h1 {
-      margin-bottom: 20px;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .board {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      gap: 5px;
-      justify-content: center;
-      margin-bottom: 20px;
+    .container {
+      width: min(1080px, 92vw);
+      margin: 0 auto;
+      padding: 24px 0 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
     }
 
-    .cell {
-      width: 100px;
-      height: 100px;
-      background: white;
-      font-size: 2.5rem;
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(11, 18, 32, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-content {
+      width: min(1080px, 92vw);
+      margin: 0 auto;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 18px;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand span {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 12px;
+      background: rgba(124, 58, 237, 0.18);
+      color: #d8b4fe;
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      font-size: 0.9rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: var(--muted);
+      transition: color 150ms ease, background 150ms ease;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      font-weight: 700;
       cursor: pointer;
-      border: 2px solid #333;
+      letter-spacing: -0.01em;
+      box-shadow: var(--shadow);
+      transition: transform 160ms ease, box-shadow 160ms ease;
     }
 
-    .cell:hover {
-      background: #eee;
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 60px rgba(124, 58, 237, 0.4);
     }
 
-    #reset {
-      padding: 10px 20px;
+    .btn.secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .section-heading {
+      margin: 0 0 10px;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)), var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    /* Hero */
+    #intro {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      align-items: center;
+    }
+
+    .intro-copy h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 5vw, 3.8rem);
+      letter-spacing: -0.03em;
+    }
+
+    .intro-copy p {
+      color: var(--muted);
+      margin: 12px 0 20px;
+      font-size: 1.05rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      color: #bae6fd;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .intro-card {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .metric .value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .metric .label {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* About */
+    #about .panel {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .about-card {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.02);
+      display: grid;
+      gap: 6px;
+    }
+
+    .about-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+    }
+
+    .about-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)), var(--panel);
+      box-shadow: var(--shadow);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(124, 58, 237, 0.4);
+      box-shadow: 0 30px 70px rgba(124, 58, 237, 0.28);
+    }
+
+    .thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #1f2937;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.35));
+      pointer-events: none;
+    }
+
+    .card-body {
+      padding: 16px 16px 18px;
+      display: grid;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .card-body h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-body p {
+      margin: 0;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(124, 58, 237, 0.15);
+      color: #d8b4fe;
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      font-size: 0.85rem;
+    }
+
+    /* Contact */
+    #contact .panel {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .contact-card {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      display: grid;
+      gap: 8px;
+    }
+
+    .contact-card h4 {
+      margin: 0;
+    }
+
+    .contact-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+    }
+
+    label {
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
       font-size: 1rem;
-      cursor: pointer;
     }
 
-    #status {
-      margin-bottom: 10px;
-      font-size: 1.2rem;
+    input:focus, textarea:focus {
+      outline: 2px solid rgba(124, 58, 237, 0.5);
+      outline-offset: 1px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    footer {
+      color: var(--muted);
+      text-align: center;
+      padding: 18px 0 24px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        justify-content: center;
+      }
+
+      .nav-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Tic Tac Toe</h1>
-  <div id="board" class="board"></div>
-  <p id="status">Player X's turn</p>
-  <button id="reset">Reset</button>
+  <nav>
+    <div class="nav-content">
+      <div class="brand">Mohamed Gaaboub <span>Portfolio</span></div>
+      <div class="nav-links">
+        <a href="#intro">Intro</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <button class="btn secondary" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })">Work with me</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="intro">
+      <div class="intro-copy">
+        <h1>Hi, I'm Mohamed Gaaboub.</h1>
+        <p>I craft thoughtful web experiences—products that feel polished, fast, and purposeful. My work blends design systems, accessible UI patterns, and reliable engineering.</p>
+        <div class="chips">
+          <span class="chip">Frontend Engineering</span>
+          <span class="chip">Design Systems</span>
+          <span class="chip">Product Thinking</span>
+        </div>
+        <div class="cta-row">
+          <button class="btn" onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })">View projects</button>
+          <button class="btn secondary" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })">About me</button>
+        </div>
+      </div>
+      <div class="panel intro-card">
+        <h3>What I bring</h3>
+        <p>Full lifecycle product delivery—from research and UX strategy to performant builds and QA. I love collaborating with founders and teams who value clarity.</p>
+        <div class="metrics">
+          <div class="metric">
+            <p class="value">7+</p>
+            <p class="label">Years shipping web apps</p>
+          </div>
+          <div class="metric">
+            <p class="value">30+</p>
+            <p class="label">Projects launched</p>
+          </div>
+          <div class="metric">
+            <p class="value">∞</p>
+            <p class="label">Curiosity for better UX</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2 class="section-heading">About</h2>
+      <p class="section-subtitle">A quick snapshot of how I work and what motivates me.</p>
+      <div class="panel">
+        <div class="about-card">
+          <h3>Principles</h3>
+          <p>Clarity first, then craft. I design and build interfaces that stay resilient as they grow.</p>
+        </div>
+        <div class="about-card">
+          <h3>Toolbox</h3>
+          <p>TypeScript, React, Next.js, Node.js, accessibility audits, design tokens, and prototyping in Figma.</p>
+        </div>
+        <div class="about-card">
+          <h3>Collaboration</h3>
+          <p>Comfortable leading squads or pairing closely with designers, PMs, and stakeholders to deliver value quickly.</p>
+        </div>
+        <div class="about-card">
+          <h3>What’s next</h3>
+          <p>Opportunities to build inclusive products, refine design systems, and mentor teams through delivery.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-heading">Projects</h2>
+      <p class="section-subtitle">Selected work spanning product design, frontend engineering, and data-rich experiences.</p>
+      <div class="projects-grid" aria-label="Project list">
+        <!-- Cards rendered by JavaScript -->
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-heading">Contact me</h2>
+      <p class="section-subtitle">Ready to collaborate or want to say hello? Reach out and let’s build something great.</p>
+      <div class="panel">
+        <div class="contact-card">
+          <h4>Email</h4>
+          <p><a href="mailto:hello@mohamedgaaboub.com">hello@mohamedgaaboub.com</a></p>
+        </div>
+        <div class="contact-card">
+          <h4>LinkedIn</h4>
+          <p><a href="https://www.linkedin.com" target="_blank" rel="noreferrer">linkedin.com/in/mohamedgaaboub</a></p>
+        </div>
+        <div class="contact-card">
+          <h4>Send a note</h4>
+          <form aria-label="Contact form">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required>
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required>
+            </div>
+            <div>
+              <label for="message">Project details</label>
+              <textarea id="message" name="message" placeholder="What would you like to build?" required></textarea>
+            </div>
+            <button class="btn" type="button" onclick="alert('Thanks! I will get back to you soon.')">Send message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Crafted by Mohamed Gaaboub — Building thoughtful, reliable web products.
+  </footer>
 
   <script>
-    const board = document.getElementById('board');
-    const statusText = document.getElementById('status');
-    const resetBtn = document.getElementById('reset');
-
-    let cells = [];
-    let currentPlayer = 'X';
-    let gameActive = true;
-
-    const winPatterns = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-      [0, 4, 8], [2, 4, 6]
+    const projects = [
+      {
+        title: 'Design Systems Playbook',
+        description: 'A reusable component library with tokens, documentation, and accessibility guidelines for multi-brand products.',
+        thumb: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1000&q=80',
+        tags: ['Design Tokens', 'Accessibility', 'Storybook']
+      },
+      {
+        title: 'Product Analytics Hub',
+        description: 'Real-time dashboards with cohort analysis, alerting, and role-based permissions for data-driven teams.',
+        thumb: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=1000&q=80',
+        tags: ['Next.js', 'TypeScript', 'D3.js']
+      },
+      {
+        title: 'E-commerce Accelerator',
+        description: 'High-performing storefront with personalized recommendations, secure checkout, and CMS-driven content.',
+        thumb: 'https://images.unsplash.com/photo-1542293787938-4d352b042b24?auto=format&fit=crop&w=1000&q=80',
+        tags: ['React', 'Stripe', 'Headless CMS']
+      },
+      {
+        title: 'Onboarding Microsite',
+        description: 'Interactive storytelling experience with motion, progressive disclosure, and clear activation paths.',
+        thumb: 'https://images.unsplash.com/photo-1502882702508-17c77b2700d4?auto=format&fit=crop&w=1000&q=80',
+        tags: ['Animations', 'GSAP', 'UX Writing']
+      },
+      {
+        title: 'Data Visualization Lab',
+        description: 'Bespoke visualizations transforming complex metrics into concise narratives for stakeholders.',
+        thumb: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1000&q=80',
+        tags: ['Svelte', 'APIs', 'Data Viz']
+      },
+      {
+        title: 'Accessibility Toolkit',
+        description: 'Guidelines, components, and audits to ensure every release meets WCAG standards and works for everyone.',
+        thumb: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=80',
+        tags: ['WCAG', 'Inclusive Design', 'Testing']
+      }
     ];
 
-    function createBoard() {
-      board.innerHTML = '';
-      cells = [];
-      for (let i = 0; i < 9; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('cell');
-        cell.dataset.index = i;
-        cell.addEventListener('click', handleCellClick);
-        board.appendChild(cell);
-        cells.push(cell);
-      }
+    const projectsContainer = document.querySelector('.projects-grid');
+
+    function renderProjects() {
+      projectsContainer.innerHTML = projects.map(project => `
+        <article class="card">
+          <div class="thumb">
+            <img src="${project.thumb}" alt="${project.title} thumbnail">
+          </div>
+          <div class="card-body">
+            <h3>${project.title}</h3>
+            <p>${project.description}</p>
+            <div class="tags">
+              ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
+          </div>
+        </article>
+      `).join('');
     }
 
-    function handleCellClick(e) {
-      const cell = e.target;
-      const index = cell.dataset.index;
-
-      if (!gameActive || cell.textContent) return;
-
-      cell.textContent = currentPlayer;
-      if (checkWin(currentPlayer)) {
-        statusText.textContent = `Player ${currentPlayer} wins!`;
-        gameActive = false;
-      } else if (cells.every(c => c.textContent)) {
-        statusText.textContent = `It's a draw!`;
-        gameActive = false;
-      } else {
-        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        statusText.textContent = `Player ${currentPlayer}'s turn`;
-      }
-    }
-
-    function checkWin(player) {
-      return winPatterns.some(pattern =>
-        pattern.every(index => cells[index].textContent === player)
-      );
-    }
-
-    resetBtn.addEventListener('click', () => {
-      currentPlayer = 'X';
-      gameActive = true;
-      statusText.textContent = `Player X's turn`;
-      createBoard();
-    });
-
-    createBoard();
+    renderProjects();
   </script>
 </body>
 </html>
